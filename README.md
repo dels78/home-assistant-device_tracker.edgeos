@@ -47,3 +47,7 @@ Default value: true
 `You need to enable telnet on your router if you choose to use protocol: telnet.`
 
 See the [device tracker component](https://www.home-assistant.io/components/device_tracker/) page for instructions how to configure the people to be tracked.
+
+**INSTALLATION**
+
+Until this is integrated as an actual component, you need to add edgeos.py to /<config dir>/custom_components/device_tracker/ of your Home Assistant.
