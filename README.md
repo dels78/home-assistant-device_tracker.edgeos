@@ -1,25 +1,26 @@
 # home-assistant-device_tracker.edgeos
 Home-Assistant device_tracker component for Ubiquiti Edgerouter devices
 
-HEAVILY based on AsusWRT component: 
+HEAVILY based on [AsusWRT component](https://github.com/home-assistant/home-assistant/blob/dev/homeassistant/components/device_tracker/asuswrt.py)
 
-https://github.com/home-assistant/home-assistant/blob/dev/homeassistant/components/device_tracker/asuswrt.py
 
-The edgeos platform offers presence detection by looking at connected devices to a EDGEOS based router.
+The `edgeos` platform offers presence detection by looking at connected devices to a EDGEOS based router.
 
-This platform is NOT available for Microsoft Windows installations.
+`This platform is NOT available for Microsoft Windows installations.`
 
-CONFIGURATION
+**CONFIGURATION**
 
 To use an EdgeOS router in your installation, add the following to your configuration.yaml file:
-
+```
 # Example configuration.yaml entry
 device_tracker:
   - platform: edgeos
     host: YOUR_ROUTER_IP
     username: YOUR_ADMIN_USERNAME
 CONFIGURATION VARIABLES
+```
 
+```
 host
 (string)(Required)The IP address of your router, eg. 192.168.1.1.
 username
@@ -40,6 +41,8 @@ ssh_key
 require_ip
 (boolean)(Optional)If the router is in access point mode.
 Default value: true
-You need to enable telnet on your router if you choose to use protocol: telnet.
+```
 
-See the device tracker component page for instructions how to configure the people to be tracked.
+`You need to enable telnet on your router if you choose to use protocol: telnet.`
+
+See the [device tracker component](https://www.home-assistant.io/components/device_tracker/) page for instructions how to configure the people to be tracked.
