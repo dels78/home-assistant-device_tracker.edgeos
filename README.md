@@ -17,6 +17,9 @@ device_tracker:
   - platform: edgeos
     host: YOUR_ROUTER_IP
     username: YOUR_ADMIN_USERNAME
+    interval_seconds: 60
+    ssh_key: /config/id_rsa
+    track_new_devices:  False
 ```
 
 **CONFIGURATION VARIABLES**
@@ -51,3 +54,8 @@ See the [device tracker component](https://www.home-assistant.io/components/devi
 **INSTALLATION**
 
 Until this is integrated as an actual component, you need to add edgeos.py to /<config dir>/custom_components/device_tracker/ of your Home Assistant.
+
+**LIMITATION**
+EdgeOS doesn't really have a good way to get the names so in the `known_devices.yaml` file, you'll see the MAC address as name. Just find the actual device's mac address and change the name in `known_devices.yaml` then restart HA. 
+
+I also suggest adding `track_new_devices:  False` so that you don't get one device_tracker per each device in your network (unless that's what you want!) and then change from false to true in `known_devices.yaml` for the ones you actually want to track.
