@@ -5,7 +5,6 @@ HEAVILY based on AsusWRT component:
 
 https://github.com/home-assistant/home-assistant/blob/dev/homeassistant/components/device_tracker/asuswrt.py
 
-
 The edgeos platform offers presence detection by looking at connected devices to a EDGEOS based router.
 
 This platform is NOT available for Microsoft Windows installations.
