@@ -17,8 +17,9 @@ device_tracker:
   - platform: edgeos
     host: YOUR_ROUTER_IP
     username: YOUR_ADMIN_USERNAME
-CONFIGURATION VARIABLES
 ```
+
+**CONFIGURATION VARIABLES**
 
 ```
 host
