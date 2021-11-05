@@ -1,17 +1,16 @@
 # home-assistant-device_tracker.edgeos
-Home-Assistant device_tracker component for Ubiquiti Edgerouter devices
 
-HEAVILY based on [AsusWRT component](https://github.com/home-assistant/home-assistant/blob/dev/homeassistant/components/device_tracker/asuswrt.py)
+Home-Assistant device_tracker component for Ubiquiti Edgerouter devices. HEAVILY based on [AsusWRT component](https://github.com/home-assistant/home-assistant/blob/dev/homeassistant/components/device_tracker/asuswrt.py).
 
+The `edgeos` platform offers presence detection by looking at connected devices to an EdgeOS based router.
 
-The `edgeos` platform offers presence detection by looking at connected devices to a EDGEOS based router.
+**This platform is NOT available for Microsoft Windows installations.**
 
-`This platform is NOT available for Microsoft Windows installations.`
+## CONFIGURATION
 
-**CONFIGURATION**
+To use an EdgeOS router in your installation, add the following to your `configuration.yaml` file:
 
-To use an EdgeOS router in your installation, add the following to your configuration.yaml file:
-```
+```yaml
 # Example configuration.yaml entry
 device_tracker:
   - platform: edgeos
@@ -22,40 +21,38 @@ device_tracker:
     track_new_devices:  False
 ```
 
-**CONFIGURATION VARIABLES**
+## CONFIGURATION VARIABLES
 
-```
-host
-(string)(Required)The IP address of your router, eg. 192.168.1.1.
-username
-(string)(Required)The username of an user with administrative privileges, usually admin.
-password
-(string)(Optional)The password for your given admin account (use this if no SSH key is given).
-protocol
-(string)(Optional)The protocol (ssh or telnet) to use.
-Default value: ssh
-port
-(int)(Optional)SSH port to use.
-Default value: 22
-mode
-(string)(Optional)The operating mode of the router (router or ap).
-Default value: router
-ssh_key
-(string)(Optional)The path to your SSH private key file associated with your given admin account (instead of password).
-require_ip
-(boolean)(Optional)If the router is in access point mode.
-Default value: true
-```
+**host** *string (required)*  
+The IP address of your router, eg. 192.168.1.1.
 
-`You need to enable telnet on your router if you choose to use protocol: telnet.`
+**username** *string (required)*  
+The username of an user with administrative privileges, usually admin.
 
-See the [device tracker component](https://www.home-assistant.io/components/device_tracker/) page for instructions how to configure the people to be tracked.
+**password** *string (optional)*  
+The password for your given admin account (use this if no SSH key is given).
 
-**INSTALLATION**
+**protocol** *string (optional, default: ssh)*  
+The protocol (ssh or telnet) to use.
+
+**port** *int (optional, default: 22)*  
+SSH port to use.
+
+**mode** *string (optional, default: router)*  
+The operating mode of the router (router or ap).
+
+**ssh_key** *string (optional)*  
+The path to your SSH private key file associated with your given admin account (instead of password).
+
+**require_ip** *boolean (optional, default: True)*  
+If the router is in access point mode.
+
+**You need to enable telnet on your router if you choose to use the `telnet` protocol.**
+
+See the [device tracker integration page](https://www.home-assistant.io/integrations/device_tracker) for instructions how to configure the people to be tracked.
+
+## INSTALLATION
 
 Until this is integrated as an actual component, you need to add edgeos.py to /<config dir>/custom_components/device_tracker/ of your Home Assistant.
 
-**LIMITATION**
-EdgeOS doesn't really have a good way to get the names so in the `known_devices.yaml` file, you'll see the MAC address as name. Just find the actual device's mac address and change the name in `known_devices.yaml` then restart HA. 
-
-I also suggest adding `track_new_devices:  False` so that you don't get one device_tracker per each device in your network (unless that's what you want!) and then change from false to true in `known_devices.yaml` for the ones you actually want to track.
+You can use `track_new_devices: false` so that you don't get one tracker per each device in your network (unless that's what you want!) and then change `track: false` to `track: true` in `known_devices.yaml` for the devices you actually want to track.

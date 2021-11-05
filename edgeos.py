@@ -65,6 +65,14 @@ _ARP_REGEX = re.compile(
     r'\s' +
     r'.*')
 
+_DHCP_CMD = 'show dhcp leases | tail -n +3'
+_DHCP_REGEX = re.compile(
+    r'(?P<ip>([0-9]{1,3}[\.]){3}[0-9]{1,3})\s+' +
+    r'(?P<mac>(([0-9a-f]{2}[:-]){5}([0-9a-f]{2})))\s+' +
+    r'[0-9:/\s]+' +
+    r'\w+\s+' +
+    r'(?P<name>[a-zA-Z0-9\-\.]*)')
+
 
 def get_scanner(hass, config):
     """Validate the configuration and return an EdgeOS scanner."""
@@ -154,6 +162,7 @@ class EdgeOSDeviceScanner(DeviceScanner):
         devices = {}
         devices.update(self._get_arp())
         devices.update(self._get_neigh(devices))
+        devices.update(self._get_dhcp(devices))
 
         ret_devices = {}
         for key in devices:
@@ -190,6 +199,20 @@ class EdgeOSDeviceScanner(DeviceScanner):
                 devices[mac] = Device(mac, device['ip'], None)
         return devices
 
+    def _get_dhcp(self, cur_devices):
+        lines = self.connection.run_command(_DHCP_CMD)
+        if not lines:
+            return {}
+        result = _parse_lines(lines, _DHCP_REGEX)
+        devices = {}
+        for device in result:
+            print(device)
+            if device['mac'] is not None:
+                mac = device['mac'].upper()
+                old_device = cur_devices.get(mac)
+                old_ip = old_device.ip if old_device else None
+                devices[mac] = Device(mac, device.get('ip', old_ip), device['name'] or None)
+        return devices
 
 class _Connection:
     def __init__(self):
